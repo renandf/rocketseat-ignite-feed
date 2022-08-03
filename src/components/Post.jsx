@@ -11,7 +11,7 @@ export function Post(props) {
             <span>Web Developer</span>
           </div>
         </div>
-        
+
         <time
           title="3 Aug 2022, at 08:13h"
           dateTime="2022-08-03 08:13:30">
@@ -29,6 +29,18 @@ export function Post(props) {
           <a href="">#rocketseat</a>
         </p>
       </div>
+
+      <form className={styles.comment}>
+        <strong>Give your feedback</strong>
+
+        <textarea
+          placeholder="Write here..."
+        />
+
+        <footer>
+          <button type="submit">Post Comment</button>
+        </footer>
+      </form>
     </article>
   )
 }
