@@ -1,30 +1,44 @@
+import { format, formatDistanceToNow } from 'date-fns'
+
 import { Avatar } from "./Avatar"
 import { Comment } from "./Comment"
+
 import styles from "./Post.module.css"
 
-export function Post(props) {
+export function Post({ author, publishedAt, content }) {
+  const formattedDate = format(publishedAt, "d LLLL 'at' HH:mm")
+
+  const dateRelativeToNow = formatDistanceToNow(publishedAt, {
+    addSuffix: true,
+  })
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://github.com/diego3g.png" />
+          <Avatar src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Renan Castro</strong>
-            <span>Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
         <time
-          title="3 Aug 2022, at 08:13h"
-          dateTime="2022-08-03 08:13:30">
-            1h ago
+          title={formattedDate}
+          dateTime={publishedAt.toISOString()}>
+            {dateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>First paragraph</p>
-        <p>Second paragraph</p>
-        <p>👉 <a href="">jane.design/doctorcare</a></p>
+        {content.map(line => {
+          if (line.type === 'paragraph') {
+            return <p>{line.content}</p>
+          } else if (line.type === 'link') {
+            return <p><a href='#'>{line.content}</a></p>
+          }
+        })}
+        
         <p>
           <a href="">#newproject</a>{' '}
           <a href="">#nlw</a>{' '}
