@@ -32,6 +32,10 @@ export function Post({ author, publishedAt, content }) {
     setNewCommentText(e.target.value)
   }
 
+  function handleNewCommentInvalid(e) {
+    console.log(e)
+  }
+
   function deleteComment(commentToDelete) {
     const commentsAfterDeletion = comments.filter(comment => {
       return comment !== commentToDelete
@@ -39,6 +43,8 @@ export function Post({ author, publishedAt, content }) {
 
     setComments(commentsAfterDeletion)
   }
+
+  const isCommentEmpty = newCommentText.length === 0
 
   return (
     <article className={styles.post}>
@@ -82,10 +88,17 @@ export function Post({ author, publishedAt, content }) {
           placeholder="Write here..."
           value={newCommentText}
           onChange={handleNewCommentChange}
+          onInvalid={handleNewCommentInvalid}
+          required
         />
 
         <footer>
-          <button type="submit">Post Comment</button>
+          <button
+            type="submit"
+            disabled={isCommentEmpty}
+          >
+            Post Comment
+          </button>
         </footer>
       </form>
 
